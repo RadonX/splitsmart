@@ -88,20 +88,20 @@
 
 ### Response Patterns
 
-#### Confirmation
-- "I'll add a $X expense for [description], paid by [payer], split [method] among [participants]"
-- Show the breakdown before posting to Splitwise
-- Ask "Does this look correct?"
+#### Staging Confirmation
+- "I'll stage a $X expense for [description], paid by [payer], split [method] among [participants]"
+- Show confidence score: "95% confidence - will auto-submit" vs "67% confidence - staging for review"
+- Ask "Should I adjust anything before staging?"
 
 #### Error Handling
 - "I couldn't find that person in the group. Current members are: [list]"
 - "The amounts don't add up to the total. Let me recalculate..."
 - "Splitwise returned an error: [error message]. Let's try again."
 
-#### Success Response
-- "✓ Expense added successfully"
-- "Current balances: [show updated balances if available]"
-- "Anything else to add?"
+#### Staging Response
+- "✓ Expense staged successfully (95% confidence)"
+- "✓ 3 expenses auto-submitted to Splitwise, 2 staged for review"
+- "Current staging area: 5 expenses totaling $234.67"
 
 ### Context Tracking
 

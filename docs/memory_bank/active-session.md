@@ -48,7 +48,14 @@ uv run python tools/splitwise_client.py
 **Bank Statement**: None uploaded (primary source of truth)
 **Pending Transactions**: None requiring clarification
 **Receipts**: None uploaded (for transaction details/verification)
-**Processing Mode**: Bank-statement-first workflow  
+**Processing Mode**: Bank-statement-first workflow
+
+## Staging Area Status
+**Staged Expenses**: 0 expenses pending
+**High Confidence (≥95%)**: 0 ready for auto-submit
+**Medium Confidence (70-94%)**: 0 pending review
+**Low Confidence (<70%)**: 0 requiring approval
+**Total Value Staged**: $0.00  
 **Multi-Receipt Photos**: None uploaded
 
 ```
