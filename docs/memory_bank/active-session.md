@@ -35,9 +35,14 @@ Format when active:
 
 ## Authentication Status
 **Splitwise API**: Not authenticated
-**Consumer Key**: Not set
-**Consumer Secret**: Not set
-**Access Token**: Not set
+**Credentials Source**: .env file
+**Python Client**: Available at splitwise_client.py
+**Test Status**: Not tested
+
+*To test authentication:*
+```bash
+uv run python splitwise_client.py
+```
 
 ## Document Processing Status
 **Receipts**: None uploaded

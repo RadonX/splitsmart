@@ -20,6 +20,11 @@
 - "John paid..." → John is payer, others have paid_share=0
 - "We each paid our own" → Each person paid_share = owed_share
 
+#### Group Selection
+- Splitwise URL format: `https://secure.splitwise.com/#/groups/{group_id}`
+- Extract group_id from URL: `83515836` from `https://secure.splitwise.com/#/groups/83515836`
+- Update active-session.md with selected group context
+
 #### Receipt Upload Patterns
 - "Here's the receipt for dinner" → Extract amount, description, analyze for splitting
 - "Can you process this receipt?" → Read PDF, identify line items, suggest splits

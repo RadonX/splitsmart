@@ -1,0 +1,16 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+
+# Virtual environments
+.venv/
+
+# uv
+.uv/
+uv.lock
+
+# OS
+.DS_Store
+Thumbs.db

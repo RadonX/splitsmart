@@ -3,27 +3,95 @@
 ## Authentication
 - API uses OAuth 1.0a or Consumer Key/Secret
 - Base URL: `https://secure.splitwise.com/api/v3.0/`
+- Credentials stored in `.env` file (see `.env.example`)
 - All requests require authentication headers
 
-## Core Endpoints
+## Programmatic Interface
 
-### Create Expense
-**POST** `/create_expense`
+### Python Client: `splitwise_client.py`
 
-Required fields:
-- `cost`: Total amount (string)
-- `description`: Expense description
-- `currency_code`: 3-letter currency code (USD, EUR, etc.)
+The `SplitwiseClient` class handles all API interactions:
 
-Key optional fields:
-- `date`: YYYY-MM-DDTHH:MM:SSZ format
-- `group_id`: Group to add expense to
-- `category_id`: Expense category (15=General, 5=Entertainment, etc.)
-- `users`: Array of user split details
-- `receipt`: Base64-encoded image or file attachment (for receipt photos)
-- `details`: Additional notes (can include receipt parsing details)
+```python
+from splitwise_client import SplitwiseClient, create_equal_split_expense, create_custom_split_expense
 
-User split structure:
+# Initialize client (reads from .env automatically)
+client = SplitwiseClient()
+
+# Get user info
+user = client.get_current_user()
+
+# Get groups
+groups = client.get_groups()
+
+# Create equal split expense
+result = create_equal_split_expense(
+    description="Dinner at restaurant",
+    total_amount=60.0,
+    payer_user_id=12345,
+    participant_user_ids=[12345, 67890, 54321],
+    group_id=98765
+)
+```
+
+### Core Client Methods
+
+- `get_current_user()` - Get authenticated user details
+- `get_groups()` - List all user's groups
+- `get_group(group_id)` - Get specific group with members
+- `get_expenses(group_id, limit)` - List expenses
+- `create_expense(cost, description, users, ...)` - Create new expense
+- `update_expense(expense_id, ...)` - Modify existing expense
+- `delete_expense(expense_id)` - Remove expense
+
+### Helper Functions
+
+#### Equal Split
+```python
+create_equal_split_expense(
+    description: str,
+    total_amount: float,
+    payer_user_id: int,
+    participant_user_ids: List[int],
+    currency: str = "USD",
+    group_id: Optional[int] = None
+)
+```
+
+#### Custom Split
+```python
+create_custom_split_expense(
+    description: str,
+    total_amount: float,
+    payer_user_id: int,
+    user_amounts: Dict[int, float],  # user_id -> amount_owed
+    currency: str = "USD",
+    group_id: Optional[int] = None
+)
+```
+
+## Claude Integration Pattern
+
+1. **Parse natural language** using conversation-parser.md patterns
+2. **Extract parameters**: amount, description, payer, participants, split method
+3. **Call Python function** via Bash tool:
+   ```bash
+   python3 -c "
+   from splitwise_client import create_equal_split_expense
+   result = create_equal_split_expense('Dinner', 60.0, 12345, [12345, 67890])
+   print(result)
+   "
+   ```
+4. **Handle response** and update active-session.md
+5. **Confirm to user** with expense details
+
+## API Endpoints Reference
+
+### Create Expense: POST `/create_expense`
+Required: `cost`, `description`, `currency_code`
+Optional: `date`, `group_id`, `category_id`, `users`
+
+### User Split Structure
 ```json
 {
   "user_id": 12345,
@@ -32,21 +100,9 @@ User split structure:
 }
 ```
 
-### Get Groups
-**GET** `/get_groups`
-Returns all groups user belongs to with group_id and member details.
+### Common API Patterns
 
-### Get Group
-**GET** `/get_group/{id}`
-Returns specific group details including members.
-
-### Get Current User
-**GET** `/get_current_user`
-Returns user details including user_id needed for expense creation.
-
-## Common Patterns
-
-### Equal Split Among All
+#### Equal Split Among All
 For "split $60 dinner equally among 4 people":
 ```json
 {
@@ -61,7 +117,7 @@ For "split $60 dinner equally among 4 people":
 }
 ```
 
-### Custom Split
+#### Custom Split
 For "John paid $50, split between John and Mary where John owes $20, Mary owes $30":
 ```json
 {
@@ -75,71 +131,21 @@ For "John paid $50, split between John and Mary where John owes $20, Mary owes $
 ```
 
 ## Error Handling
-- Check for HTTP status codes
-- Parse error messages from response body
-- Common errors: invalid user_id, invalid group_id, authentication failures
+- Authentication errors: Check .env credentials
+- Invalid user_id: Verify group membership
+- Amount mismatches: Validate split calculations
+- Network errors: Retry with exponential backoff
 
-### Receipt Processing Pattern
-For receipt-based expenses:
-```json
-{
-  "cost": "47.83",
-  "description": "Mario's Pizza - itemized",
-  "date": "2024-01-15T19:30:00Z",
-  "details": "Large Pepperoni Pizza: $18.99, Caesar Salad: $8.50, 2 Drinks: $6.00, Tax & Tip: $14.34",
-  "users": [
-    {"user_id": 1, "paid_share": "47.83", "owed_share": "24.78"},
-    {"user_id": 2, "paid_share": "0.00", "owed_share": "14.28"},
-    {"user_id": 3, "paid_share": "0.00", "owed_share": "6.78"}
-  ]
-}
-```
+## Setup Requirements
 
-## Receipt Handling
-- Use Read tool to extract text from uploaded PDF receipts
-- Parse key information: vendor, date, total amount, line items
-- Guide user through item-by-item splitting decisions
-- Include itemized breakdown in `details` field for transparency
-- Attach original receipt file if supported by API
+1. Copy `.env.example` to `.env`
+2. Register app at https://secure.splitwise.com/apps
+3. Fill in consumer key/secret in `.env`
+4. Install dependencies: `pip install requests python-dotenv`
+5. Test with: `python3 splitwise_client.py`
 
-### Batch Expense Creation Pattern
-For bank statements or multiple receipts:
-```python
-# Process multiple expenses efficiently
-expenses_data = [
-    {"cost": "47.83", "description": "Mario's Pizza", "date": "2024-01-15T19:30:00Z"},
-    {"cost": "45.67", "description": "Shell Gas Station", "date": "2024-01-15T14:20:00Z"},
-    {"cost": "240.00", "description": "Marriott Hotel", "date": "2024-01-16T15:00:00Z"}
-]
-
-for expense in expenses_data:
-    # Add user splits to each expense
-    expense["users"] = calculate_split_for_expense(expense, participants, split_method)
-    # Create individual Splitwise expense
-    response = post_to_splitwise("/create_expense", expense)
-```
-
-### Bank Statement Filtering
-Common transaction types to exclude:
-- ATM withdrawals
-- Bank fees
-- Transfers between accounts
-- Personal charges outside trip dates
-- Duplicate/refund transactions
-
-Include candidates:
-- Restaurant/food charges
-- Gas stations
-- Hotels/accommodation
-- Transportation (Uber, taxi, parking)
-- Entertainment/activities
-
-## Helper Functions to Write
-- `post_to_splitwise(endpoint, data)` - Generic API caller
-- `create_expense_payload(description, amount, payer, participants, split_method)` - Convert natural language to API format
-- `get_group_members(group_id)` - Fetch current group participants
-- `parse_receipt_pdf(file_path)` - Extract structured data from receipt PDFs
-- `calculate_itemized_splits(items, participant_assignments)` - Calculate individual owed shares from line items
-- `parse_bank_statement(file_path, trip_dates)` - Extract and filter relevant transactions
-- `identify_receipt_regions(image_path)` - Separate multiple receipts in single photo
-- `batch_create_expenses(expenses_list)` - Efficiently create multiple Splitwise expenses
+## Receipt Processing (Future Enhancement)
+- Upload receipt photos via `receipt` parameter (base64-encoded)
+- Parse receipt details into `details` field for transparency
+- Guide users through itemized splitting decisions
+- Support multiple receipt formats (PDF, JPG, PNG)
