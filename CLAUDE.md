@@ -23,10 +23,11 @@ Before I can help with ANY expense-related task, I must read:
 ## Session Workflow
 
 1. **Start**: Read entire memory bank to understand current context
-2. **Authenticate**: Verify Splitwise API access if needed
-3. **Set Group**: Ensure active group is selected for expense operations
-4. **Process Requests**: Parse natural language and execute Splitwise API calls
-5. **Update Context**: Keep `active-session.md` current with new expenses and state changes
+2. **Trip Context**: Collect trip name, dates, travelers, and destination if not already set
+3. **Authenticate**: Verify Splitwise API access if needed
+4. **Group Setup**: Match Splitwise group to trip travelers, validate participants
+5. **Process Requests**: Parse natural language, stage expenses, and execute Splitwise API calls
+6. **Update Context**: Keep `active-session.md` current with trip context, staging area, and expenses
 
 ## Key Capabilities
 

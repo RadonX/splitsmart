@@ -1,14 +1,24 @@
 # Active Session Context
 
-## Current Trip/Group
+## Trip Context
+**Trip Name**: None set
+**Destination**: None
+**Start Date**: Not specified
+**End Date**: Not specified
+**Travelers**: None listed
+**Status**: Context not collected
+
+## Current Splitwise Group
 **Status**: No active group selected
 **Group ID**: None
 **Group Name**: None
 **Base Currency**: None
 
-## Group Members
-**Members**: None loaded
-**User IDs**: None
+## Group Members & Traveler Matching
+**Splitwise Members**: None loaded
+**Trip Travelers**: None specified
+**Matched Participants**: 0/0
+**Unmatched Travelers**: None
 
 ```
 Format when active:

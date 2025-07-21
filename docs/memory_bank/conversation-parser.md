@@ -50,11 +50,17 @@
 
 ### Conversation Flow Patterns
 
-#### Initial Expense Entry
-1. **Capture basics**: "What was the expense for?" → description
-2. **Get amount**: "How much?" → cost
-3. **Identify payer**: "Who paid?" → paid_share assignment
-4. **Determine split**: "How should this be split?" → owed_share calculation
+#### Initial Session Setup
+1. **Trip Context**: "What trip are we processing expenses for?" → trip name, dates, travelers
+2. **Splitwise Group**: "Which Splitwise group should I use?" → group selection and member matching
+3. **Validation**: Check traveler-to-group-member matching, flag discrepancies
+4. **Ready**: "Great! Ready to process expenses for [trip] with [travelers]."
+
+#### Expense Processing (After Context Set)
+1. **Bank Statement**: Upload and filter by trip dates
+2. **Transaction Review**: Present candidates within date range
+3. **Clarification**: "What was this $X charge at [Merchant] for?" 
+4. **Staging**: Add to staging area with confidence score
 
 #### Receipt Processing Flow
 1. **Read Receipt**: Extract text from PDF using Read tool
@@ -118,9 +124,16 @@
 
 ### Example Conversations
 
-**Bank Statement Processing:**
+**Session Start (No Context):**
+Claude: "Hi! Let's process your trip expenses. What trip are we working on?"
+User: "Montreal trip last weekend"
+Claude: "Got it! Can you give me the specific dates and who went on the trip?"
+User: "January 15-18, 2024. Me, John, Mary, and Bob."
+Claude: "Perfect! Which Splitwise group should I use for these expenses?"
+
+**Bank Statement Processing (With Context):**
 User: "Process this bank statement from our Montreal trip"
-Claude: "I found 23 transactions. Let me filter for likely expenses between [trip dates]. I see charges like $47.83 at Mario's Pizza, $240 at Marriott Hotel. Should I process all restaurant and hotel charges?"
+Claude: "I found 23 transactions. Filtering for Jan 15-18 Montreal trip expenses... I see 12 relevant charges like $47.83 at Mario's Pizza, $240 at Marriott Hotel. Should I process all restaurant and hotel charges for you, John, Mary, and Bob?"
 
 **Bank Transaction Clarification:**
 User: "The $47.83 Mario's Pizza was dinner for 3 people"

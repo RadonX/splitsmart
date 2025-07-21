@@ -1,6 +1,20 @@
 # Bank-Statement-First Workflow Patterns
 
-## Primary Workflow: Bank Statement → Clarification → Splitwise
+## Primary Workflow: Trip Context → Bank Statement → Clarification → Splitwise
+
+### Step 0: Trip Context Collection
+```
+Session Start:
+Claude: "Let's set up your trip context first. What trip are we processing expenses for?"
+↓
+User: Provides trip name, dates, travelers
+↓
+Claude: "Got it! Montreal trip, Jan 15-18, 2024, with John, Mary, Bob. Which Splitwise group should I use?"
+↓
+User: Provides Splitwise group URL or selects from list
+↓
+Claude: Match trip travelers to Splitwise group members, flag any mismatches
+```
 
 ### Step 1: Bank Statement Upload & Parse
 ```
@@ -8,7 +22,9 @@ User uploads bank statement (PDF/CSV)
 ↓
 Claude: Parse all transactions
 ↓  
-Claude: Filter by date range and amount thresholds
+Claude: Filter by trip date range and amount thresholds
+↓
+Claude: "Found 23 transactions, 12 within trip dates (Jan 15-18). Processing trip expenses only."
 ↓
 Claude: Present expense candidates for review
 ```
@@ -111,6 +127,50 @@ Claude: "I see 3 separate receipts in this photo:
 Should I process all three?"
 ```
 
+## Trip Context Collection
+
+### Initial Setup Questions
+**Trip Identification:**
+- "What trip are we processing expenses for?"
+- "Where did you go and when?"
+- "What should I call this trip?"
+
+**Date Range:**
+- "What were the trip dates?" (start and end)
+- "Include travel days?" (flights, arrival/departure)
+- "Any pre-trip shopping to include?"
+
+**Travelers:**
+- "Who went on this trip?"
+- "Are there any people who joined partway through?"
+- "Anyone who left early?"
+
+**Splitwise Integration:**
+- "Which Splitwise group should I use?"
+- "Do all travelers have Splitwise accounts?"
+- "Should I create expenses for everyone or just group members?"
+
+### Trip Context Validation
+**Traveler Matching:**
+```
+Trip travelers: [John, Mary, Bob, Sarah]
+Splitwise group: [John Smith, Mary Johnson, Bob Wilson]
+↓
+Claude: "I notice Sarah isn't in the Splitwise group. Should I:
+A) Add expenses for her anyway (you'll settle outside Splitwise)
+B) Exclude her from shared expenses
+C) Help you invite her to the group first?"
+```
+
+**Date Range Validation:**
+```
+Trip dates: Jan 15-18, 2024
+Bank statement shows charges on Jan 14 and Jan 19
+↓
+Claude: "I see charges on Jan 14 ($45 Uber) and Jan 19 ($30 breakfast). 
+Should I include travel day expenses?"
+```
+
 ## User Input Patterns
 
 ### Transaction Clarification Questions
@@ -139,8 +199,9 @@ Should I process all three?"
 - Exact amount match between bank statement and receipt
 - Clear merchant name with obvious category
 - User explicitly confirmed split method
-- Standard equal split among all group members
-- Transaction within trip date range
+- Standard equal split among all known trip travelers
+- Transaction within established trip date range
+- Participant list matches trip context
 
 **Medium Confidence Indicators (+10-20% each):**
 - Fuzzy merchant name match
@@ -151,9 +212,10 @@ Should I process all three?"
 **Low Confidence Penalties (-10-30% each):**
 - Unclear merchant name requiring guess
 - Unusual amount for expense type
-- Custom split with unconfirmed participants
-- Transaction outside typical trip dates
+- Custom split with participants not on trip
+- Transaction outside established trip dates
 - Missing receipt for large expense (>$100)
+- Participants unknown or not in Splitwise group
 
 ### Confidence Calculation Examples
 
