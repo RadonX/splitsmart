@@ -144,6 +144,16 @@ For "John paid $50, split between John and Mary where John owes $20, Mary owes $
 4. Install dependencies: `pip install requests python-dotenv`
 5. Test with: `python3 tools/splitwise_client.py`
 
+## Real-World API Troubleshooting
+
+**Official API Documentation**: https://dev.splitwise.com
+
+When tools don't work as expected:
+1. Check official docs at https://dev.splitwise.com for current API format
+2. Test incrementally - start simple, add complexity gradually
+3. Real APIs often differ from docs - adapt the tools based on actual behavior
+4. Common fixes: form data vs JSON, flattened parameters, rounding precision
+
 ## Receipt Processing (Future Enhancement)
 - Upload receipt photos via `receipt` parameter (base64-encoded)
 - Parse receipt details into `details` field for transparency
