@@ -34,15 +34,15 @@ class SplitwiseClient:
         
         # Use API key authentication (Bearer token)
         headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
+            "Authorization": f"Bearer {self.api_key}"
         }
         
         try:
             if method == "GET":
                 response = requests.get(url, headers=headers)
             elif method == "POST":
-                response = requests.post(url, headers=headers, json=data)
+                # For POST requests, send as form data not JSON
+                response = requests.post(url, headers=headers, data=data)
             else:
                 raise ValueError(f"Unsupported HTTP method: {method}")
             
@@ -113,8 +113,12 @@ class SplitwiseClient:
         else:
             data["date"] = datetime.now().isoformat() + "Z"
         
+        # Flatten users array to Splitwise API format
         if users:
-            data["users"] = users
+            for i, user in enumerate(users):
+                data[f"users__{i}__user_id"] = user["user_id"]
+                data[f"users__{i}__paid_share"] = user["paid_share"]
+                data[f"users__{i}__owed_share"] = user["owed_share"]
         
         return self._make_request("create_expense", "POST", data)
     
@@ -129,7 +133,8 @@ class SplitwiseClient:
 
 def create_equal_split_expense(description: str, total_amount: float, 
                              payer_user_id: int, participant_user_ids: List[int],
-                             currency: str = "USD", group_id: Optional[int] = None) -> Dict:
+                             currency: str = "USD", group_id: Optional[int] = None,
+                             date: Optional[str] = None) -> Dict:
     """
     Helper function to create an equal split expense
     
@@ -140,40 +145,57 @@ def create_equal_split_expense(description: str, total_amount: float,
         participant_user_ids: List of all people who should split the cost
         currency: Currency code
         group_id: Group to add to
+        date: Date in YYYY-MM-DD format
     """
     client = SplitwiseClient()
     
-    # Calculate equal split
-    per_person = round(total_amount / len(participant_user_ids), 2)
+    # Calculate equal split with proper rounding to avoid cent discrepancies
+    per_person = total_amount / len(participant_user_ids)
+    per_person_rounded = round(per_person, 2)
     
     # Build users array
     users = []
-    for user_id in participant_user_ids:
+    total_owed = 0
+    for i, user_id in enumerate(participant_user_ids):
+        if i == len(participant_user_ids) - 1:
+            # Last person gets the remainder to ensure total matches
+            owed_share = total_amount - total_owed
+        else:
+            owed_share = per_person_rounded
+            total_owed += owed_share
+        
         if user_id == payer_user_id:
             users.append({
                 "user_id": user_id,
                 "paid_share": str(total_amount),
-                "owed_share": str(per_person)
+                "owed_share": str(round(owed_share, 2))
             })
         else:
             users.append({
                 "user_id": user_id,
                 "paid_share": "0.00",
-                "owed_share": str(per_person)
+                "owed_share": str(round(owed_share, 2))
             })
+    
+    # Convert date to ISO format if provided
+    iso_date = None
+    if date:
+        iso_date = f"{date}T12:00:00Z"  # Default to noon UTC
     
     return client.create_expense(
         cost=str(total_amount),
         description=description,
         currency_code=currency,
         users=users,
-        group_id=group_id
+        group_id=group_id,
+        date=iso_date
     )
 
 
 def create_custom_split_expense(description: str, total_amount: float,
                               payer_user_id: int, user_amounts: Dict[int, float],
-                              currency: str = "USD", group_id: Optional[int] = None) -> Dict:
+                              currency: str = "USD", group_id: Optional[int] = None,
+                              date: Optional[str] = None) -> Dict:
     """
     Helper function to create a custom split expense
     
@@ -184,6 +206,7 @@ def create_custom_split_expense(description: str, total_amount: float,
         user_amounts: Dict mapping user_id to amount they owe
         currency: Currency code
         group_id: Group to add to
+        date: Date in YYYY-MM-DD format
     """
     client = SplitwiseClient()
     
@@ -207,12 +230,18 @@ def create_custom_split_expense(description: str, total_amount: float,
                 "owed_share": str(owed_amount)
             })
     
+    # Convert date to ISO format if provided
+    iso_date = None
+    if date:
+        iso_date = f"{date}T12:00:00Z"  # Default to noon UTC
+    
     return client.create_expense(
         cost=str(total_amount),
         description=description,
         currency_code=currency,
         users=users,
-        group_id=group_id
+        group_id=group_id,
+        date=iso_date
     )
 
 
