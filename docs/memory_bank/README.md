@@ -50,6 +50,24 @@ flowchart TD
 2. Map to Splitwise API calls using splitwise-api.md
 3. Update active-session.md with new expenses
 
+**During receipt processing:**
+1. Use Read tool to extract text from uploaded PDF receipts
+2. Parse vendor, date, total amount, and line items
+3. Guide user through itemized splitting decisions
+4. Create expense with detailed breakdown in notes field
+
+**During bank statement processing:**
+1. Extract transaction data from bank statement PDF/image
+2. Filter transactions by trip dates and relevance
+3. Present candidates for splitting, excluding ATM/personal charges
+4. Batch create multiple Splitwise expenses efficiently
+
+**During multi-receipt photo processing:**
+1. Identify separate receipt regions within single photo
+2. Extract details from each receipt individually
+3. Allow selective splitting (some personal, some shared)
+4. Process each shared receipt as separate expense
+
 **Session management:**
 1. Keep active-session.md current with group and member info
 2. Write simple helper functions when needed
@@ -61,10 +79,17 @@ flowchart TD
 - `"set group [name]"` - Switch to different Splitwise group
 - `"show balances"` - Fetch current balances from Splitwise
 - `"add expense"` - Start conversational expense entry
+- `"upload receipt"` - Process PDF receipt for expense creation
+- `"upload bank statement"` - Process bank statement for multiple expenses
+- `"upload photo"` - Process photo with multiple receipts
 
 ## Core Capabilities
 
 - Natural language expense parsing
+- PDF receipt processing and text extraction
+- Bank statement transaction filtering and batch processing
+- Multi-receipt photo analysis and individual processing
+- Itemized expense splitting with line-item control
 - Splitwise API integration with authentication
 - Multiple splitting methods (equal, custom, proportional)
 - Group member management and context tracking
