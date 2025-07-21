@@ -36,12 +36,12 @@ Format when active:
 ## Authentication Status
 **Splitwise API**: Not authenticated
 **Credentials Source**: .env file
-**Python Client**: Available at splitwise_client.py
+**Python Client**: Available at tools/splitwise_client.py
 **Test Status**: Not tested
 
 *To test authentication:*
 ```bash
-uv run python splitwise_client.py
+uv run python tools/splitwise_client.py
 ```
 
 ## Document Processing Status

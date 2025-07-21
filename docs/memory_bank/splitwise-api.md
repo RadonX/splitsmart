@@ -8,12 +8,12 @@
 
 ## Programmatic Interface
 
-### Python Client: `splitwise_client.py`
+### Python Client: `tools/splitwise_client.py`
 
 The `SplitwiseClient` class handles all API interactions:
 
 ```python
-from splitwise_client import SplitwiseClient, create_equal_split_expense, create_custom_split_expense
+from tools.splitwise_client import SplitwiseClient, create_equal_split_expense, create_custom_split_expense
 
 # Initialize client (reads from .env automatically)
 client = SplitwiseClient()
@@ -77,7 +77,7 @@ create_custom_split_expense(
 3. **Call Python function** via Bash tool:
    ```bash
    python3 -c "
-   from splitwise_client import create_equal_split_expense
+   from tools.splitwise_client import create_equal_split_expense
    result = create_equal_split_expense('Dinner', 60.0, 12345, [12345, 67890])
    print(result)
    "
@@ -142,7 +142,7 @@ For "John paid $50, split between John and Mary where John owes $20, Mary owes $
 2. Register app at https://secure.splitwise.com/apps
 3. Fill in consumer key/secret in `.env`
 4. Install dependencies: `pip install requests python-dotenv`
-5. Test with: `python3 splitwise_client.py`
+5. Test with: `python3 tools/splitwise_client.py`
 
 ## Receipt Processing (Future Enhancement)
 - Upload receipt photos via `receipt` parameter (base64-encoded)
