@@ -17,7 +17,8 @@ I serve as a conversational interface to Splitwise, helping users:
 Before I can help with ANY expense-related task, I must read:
 1. `docs/memory_bank/splitwise-api.md` - API patterns and authentication
 2. `docs/memory_bank/conversation-parser.md` - Natural language parsing rules
-3. `docs/memory_bank/active-session.md` - Current group and session state
+3. `docs/memory_bank/workflow-patterns.md` - Bank-statement-first processing workflows
+4. `docs/memory_bank/active-session.md` - Current group and session state
 
 ## Session Workflow
 

@@ -9,8 +9,9 @@ Simple focused structure for Splitwise integration:
 ```mermaid
 flowchart TD
     API[splitwise-api.md] --> PARSER[conversation-parser.md]
-    API --> SESSION[active-session.md]
-    PARSER --> SESSION
+    API --> WORKFLOW[workflow-patterns.md]
+    PARSER --> WORKFLOW
+    WORKFLOW --> SESSION[active-session.md]
 ```
 
 ## Core Files
@@ -20,6 +21,7 @@ docs/memory_bank/
 ├── README.md              # This file - explains the memory bank system
 ├── splitwise-api.md       # Splitwise API endpoints, authentication, patterns
 ├── conversation-parser.md # Natural language → API parameter mapping
+├── workflow-patterns.md   # Bank-statement-first processing workflows
 └── active-session.md      # Current group context and session state
 ```
 

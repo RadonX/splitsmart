@@ -25,9 +25,15 @@
 - Extract group_id from URL: `83515836` from `https://secure.splitwise.com/#/groups/83515836`
 - Update active-session.md with selected group context
 
-#### Receipt Upload Patterns
-- "Here's the receipt for dinner" → Extract amount, description, analyze for splitting
-- "Can you process this receipt?" → Read PDF, identify line items, suggest splits
+#### Bank Statement Processing (Primary Source)
+- "Here's my bank statement from the trip" → Parse all transactions, filter by dates/amounts
+- "Process these transactions" → Extract expense candidates, ask for clarification
+- Bank statement line → Match with receipt if provided, or ask user for context
+
+#### Receipt/User Input (Secondary Clarification)
+- "Here's the receipt for the $47.83 Mario's Pizza charge" → Match to bank statement line
+- "The $240 charge was for hotel, split 3 ways" → Add context to bank statement transaction
+- "Skip the ATM withdrawals" → Filter out non-expense transactions
 - "Split this receipt equally" → Parse receipt, divide total among group
 - "This receipt has multiple items" → Ask which items to include/exclude per person
 
@@ -112,17 +118,21 @@
 
 ### Example Conversations
 
-**Simple Equal Split:**
-User: "I paid $40 for dinner, split it equally"
-Claude: "I'll add a $40 dinner expense paid by you, split equally among [group members]. That's $X each. Correct?"
+**Bank Statement Processing:**
+User: "Process this bank statement from our Montreal trip"
+Claude: "I found 23 transactions. Let me filter for likely expenses between [trip dates]. I see charges like $47.83 at Mario's Pizza, $240 at Marriott Hotel. Should I process all restaurant and hotel charges?"
 
-**Custom Split:**
-User: "John paid $60 for gas, but Mary wasn't in the car"
-Claude: "So John paid $60 for gas, split between John and you (excluding Mary)? That's $30 each for John and you."
+**Bank Transaction Clarification:**
+User: "The $47.83 Mario's Pizza was dinner for 3 people"
+Claude: "Got it! I'll create a $47.83 dinner expense at Mario's Pizza, split equally among 3 people ($15.94 each). Who paid this charge?"
 
-**Clarification Needed:**
-User: "Split the hotel cost"
-Claude: "I need a few details: How much was the hotel? Who paid? Should this be split among everyone or just certain people?"
+**Receipt Matching:**
+User: "Here's the receipt for that $47.83 Mario's charge"
+Claude: "Perfect! I can see itemized details: Large Pizza $18.99, Salads $12.00, Drinks $8.50, Tax/Tip $8.34. Should everyone split everything equally, or did people order specific items?"
+
+**Manual Entry with Context:**
+User: "Add $60 gas expense, John paid, split between me and John only"
+Claude: "Adding $60 gas expense paid by John, split equally between you and John ($30 each). This will be added to Splitwise."
 
 **Receipt Processing:**
 User: [Uploads PDF receipt]

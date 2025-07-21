@@ -45,8 +45,10 @@ uv run python tools/splitwise_client.py
 ```
 
 ## Document Processing Status
-**Receipts**: None uploaded
-**Bank Statements**: None uploaded  
+**Bank Statement**: None uploaded (primary source of truth)
+**Pending Transactions**: None requiring clarification
+**Receipts**: None uploaded (for transaction details/verification)
+**Processing Mode**: Bank-statement-first workflow  
 **Multi-Receipt Photos**: None uploaded
 
 ```
