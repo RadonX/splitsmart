@@ -19,10 +19,11 @@ flowchart TD
 ```
 docs/memory_bank/
 ├── README.md              # This file - explains the memory bank system
+├── conversation-progress.md # Complete session progress tracking and structure
+├── active-session.md      # Current group context and session state
 ├── splitwise-api.md       # Splitwise API endpoints, authentication, patterns
 ├── conversation-parser.md # Natural language → API parameter mapping
-├── workflow-patterns.md   # Bank-statement-first processing workflows
-└── active-session.md      # Current group context and session state
+└── workflow-patterns.md   # Bank-statement-first processing workflows
 ```
 
 ## Memory Bank Lifecycle
@@ -43,9 +44,11 @@ flowchart TD
 ## Usage
 
 **Before any expense work:**
-1. Read ALL memory bank files
-2. Check authentication status in active-session.md
-3. Verify group context is set
+1. Read conversation-progress.md to understand current session state
+2. Read ALL memory bank files
+3. Check authentication status in active-session.md
+4. Verify group context is set
+5. Update progress tracking throughout session
 
 **During expense entry:**
 1. Parse natural language using conversation-parser.md patterns

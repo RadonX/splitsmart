@@ -2,6 +2,8 @@
 
 ## Primary Workflow: Trip Context → Bank Statement → Clarification → Splitwise
 
+**Progress Tracking**: Each step updates `conversation-progress.md` with completion status, decisions made, and next actions.
+
 ### Step 0: Trip Context Collection
 ```
 Session Start:
