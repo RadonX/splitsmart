@@ -19,8 +19,8 @@ flowchart TD
 ```
 docs/memory_bank/
 ├── README.md              # This file - explains the memory bank system
-├── conversation-progress.md # Complete session progress tracking and structure
-├── active-session.md      # Current group context and session state
+├── expense-progress.md    # Dynamic: documents processed, expenses created, user decisions
+├── active-session.md      # Static: trip context, group info, authentication status
 ├── splitwise-api.md       # Splitwise API endpoints, authentication, patterns
 ├── conversation-parser.md # Natural language → API parameter mapping
 └── workflow-patterns.md   # Bank-statement-first processing workflows
@@ -30,30 +30,41 @@ docs/memory_bank/
 
 ```mermaid
 flowchart TD
-    Start[Start] --> ReadFiles[Read Memory Bank]
-    ReadFiles --> CheckFiles{Files Complete?}
-
-    CheckFiles -->|No| Plan[Create Plan]
-    Plan --> Document[Document in Chat]
-
-    CheckFiles -->|Yes| Verify[Verify Context]
-    Verify --> Strategy[Develop Strategy]
-    Strategy --> Present[Present Approach]
+    Start[Session Start] --> ReadProgress[Read expense-progress.md]
+    ReadProgress --> ReadContext[Read active-session.md]
+    ReadContext --> CheckContext{Trip Context Set?}
+    
+    CheckContext -->|No| SetupTrip[Collect Trip Details]
+    SetupTrip --> UpdateContext[Update active-session.md]
+    UpdateContext --> ReadyToProcess[Ready for Expense Processing]
+    
+    CheckContext -->|Yes| CheckProgress{Previous Work Done?}
+    CheckProgress -->|No| ReadyToProcess
+    CheckProgress -->|Yes| ContinueWork[Continue from where left off]
+    
+    ReadyToProcess --> ProcessExpenses[Process Documents/Expenses]
+    ContinueWork --> ProcessExpenses
+    ProcessExpenses --> UpdateProgress[Update expense-progress.md]
+    UpdateProgress --> ProcessExpenses
 ```
 
 ## Usage
 
 **Before any expense work:**
-1. Read conversation-progress.md to understand current session state
-2. Read ALL memory bank files
-3. Check authentication status in active-session.md
-4. Verify group context is set
-5. Update progress tracking throughout session
+1. Read expense-progress.md to see what's been processed and decided
+2. Read active-session.md for trip context and group setup
+3. Read ALL other memory bank files for patterns and API info
+4. Verify authentication and group context are set
+5. Update expense-progress.md as work progresses
+
+**File Responsibilities:**
+- `expense-progress.md` = **Dynamic tracking** (gets updated constantly during session)
+- `active-session.md` = **Static context** (set once, rarely changes during session)
 
 **During expense entry:**
 1. Parse natural language using conversation-parser.md patterns
 2. Map to Splitwise API calls using splitwise-api.md
-3. Update active-session.md with new expenses
+3. Update expense-progress.md with user decisions and created expenses
 
 **During receipt processing:**
 1. Use Read tool to extract text from uploaded PDF receipts

@@ -83,8 +83,8 @@ SplitSmart: [Batch creates all approved expenses with proper dates]
 ### Memory Bank System
 SplitSmart uses a persistent memory architecture to maintain context:
 
-- **`active-session.md`** - Current trip state and preferences
-- **`conversation-progress.md`** - Session progress and decision tracking
+- **`active-session.md`** - Trip context, group info, authentication status
+- **`expense-progress.md`** - Documents processed, expenses created, user decisions
 - **`splitwise-api.md`** - API integration patterns and authentication
 - **`conversation-parser.md`** - Natural language and menu-driven parsing rules
 - **`workflow-patterns.md`** - Bank-statement-first and menu-driven processing workflows
