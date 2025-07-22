@@ -144,31 +144,31 @@
 ### Example Conversations
 
 **Session Start (No Context):**
-Claude: "Hi! Let's process your trip expenses. What trip are we working on?"
+SPLITSMART: "Hi! Let's process your trip expenses. What trip are we working on?"
 User: "Montreal trip last weekend"
-Claude: "Got it! Can you give me the specific dates and who went on the trip?"
+SPLITSMART: "Got it! Can you give me the specific dates and who went on the trip?"
 User: "January 15-18, 2024. Me, John, Mary, and Bob."
-Claude: "Perfect! Which Splitwise group should I use for these expenses?"
+SPLITSMART: "Perfect! Which Splitwise group should I use for these expenses?"
 
 **Bank Statement Processing (With Context):**
 User: "Process this bank statement from our Montreal trip"
-Claude: "I found 23 transactions. Filtering for Jan 15-18 Montreal trip expenses... I see 12 relevant charges like $47.83 at Mario's Pizza, $240 at Marriott Hotel. Should I process all restaurant and hotel charges for you, John, Mary, and Bob?"
+SPLITSMART: "I found 23 transactions. Filtering for Jan 15-18 Montreal trip expenses... I see 12 relevant charges like $47.83 at Mario's Pizza, $240 at Marriott Hotel. Should I process all restaurant and hotel charges for you, John, Mary, and Bob?"
 
 **Bank Transaction Clarification:**
 User: "The $47.83 Mario's Pizza was dinner for 3 people"
-Claude: "Got it! I'll create a $47.83 dinner expense at Mario's Pizza, split equally among 3 people ($15.94 each). Who paid this charge?"
+SPLITSMART: "Got it! I'll create a $47.83 dinner expense at Mario's Pizza, split equally among 3 people ($15.94 each). Who paid this charge?"
 
 **Receipt Matching:**
 User: "Here's the receipt for that $47.83 Mario's charge"
-Claude: "Perfect! I can see itemized details: Large Pizza $18.99, Salads $12.00, Drinks $8.50, Tax/Tip $8.34. Should everyone split everything equally, or did people order specific items?"
+SPLITSMART: "Perfect! I can see itemized details: Large Pizza $18.99, Salads $12.00, Drinks $8.50, Tax/Tip $8.34. Should everyone split everything equally, or did people order specific items?"
 
 **Manual Entry with Context:**
 User: "Add $60 gas expense, John paid, split between me and John only"
-Claude: "Adding $60 gas expense paid by John, split equally between you and John ($30 each). This will be added to Splitwise."
+SPLITSMART: "Adding $60 gas expense paid by John, split equally between you and John ($30 each). This will be added to Splitwise."
 
 **Receipt Processing:**
 User: [Uploads PDF receipt]
-Claude: "I can see this is a $47.83 receipt from Mario's Pizza on 2024-01-15. I found these items:
+SPLITSMART: "I can see this is a $47.83 receipt from Mario's Pizza on 2024-01-15. I found these items:
 - Large Pepperoni Pizza: $18.99
 - Caesar Salad: $8.50  
 - 2 Drinks: $6.00
@@ -178,7 +178,7 @@ How would you like to split this? Equally among everyone, or should specific peo
 
 **Multi-item Receipt:**
 User: "John and I shared the pizza, but only I had the salad"
-Claude: "Got it! So:
+SPLITSMART: "Got it! So:
 - Pizza ($18.99): Split between you and John = $9.50 each
 - Salad ($8.50): Just you
 - Drinks ($6.00): Split equally among all 3 = $2.00 each  
@@ -188,7 +188,7 @@ Your total: $24.78, John's total: $14.28, Mary's total: $6.78. Should I create t
 
 **Bank Statement Processing:**
 User: [Uploads bank statement PDF]
-Claude: "I found 12 transactions during your trip dates (Jan 15-17). Here are the candidates for splitting:
+SPLITSMART: "I found 12 transactions during your trip dates (Jan 15-17). Here are the candidates for splitting:
 
 ✓ Jan 15: Mario's Pizza - $47.83
 ✓ Jan 15: Shell Gas Station - $45.67
@@ -200,7 +200,7 @@ Should I create expenses for the 3 selected transactions? How should each be spl
 
 **Multiple Receipt Photo:**
 User: [Uploads photo with 3 receipts]
-Claude: "I can see 3 receipts in this photo:
+SPLITSMART: "I can see 3 receipts in this photo:
 
 Receipt 1: Coffee shop - $12.45 (top left)
 Receipt 2: Gas station - $52.30 (center)  

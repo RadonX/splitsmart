@@ -70,7 +70,7 @@ create_custom_split_expense(
 )
 ```
 
-## Claude Integration Pattern
+## SPLITSMART Integration Pattern
 
 1. **Parse natural language** using conversation-parser.md patterns
 2. **Extract parameters**: amount, description, payer, participants, split method

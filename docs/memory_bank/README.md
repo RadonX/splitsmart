@@ -1,6 +1,6 @@
 # Splitwise Integration Memory Bank
 
-This directory contains essential knowledge for Claude to function as a conversational interface to Splitwise, designed to persist across sessions and overcome context window limitations.
+This directory contains essential knowledge for SPLITSMART to function as a conversational interface to Splitwise, designed to persist across sessions and overcome context window limitations.
 
 ## Architecture
 

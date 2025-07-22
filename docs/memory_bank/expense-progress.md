@@ -1,6 +1,6 @@
 # Expense Processing Progress
 
-*Current session state - gets updated as Claude processes expenses and user makes decisions*
+*Current session state - gets updated as SPLITSMART processes expenses and user makes decisions*
 
 ## Trip Context
 - **Trip**: Not set

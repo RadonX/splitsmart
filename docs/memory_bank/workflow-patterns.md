@@ -7,54 +7,54 @@
 ### Step 0: Trip Context Collection
 ```
 Session Start:
-Claude: "Let's set up your trip context first. What trip are we processing expenses for?"
+SPLITSMART: "Let's set up your trip context first. What trip are we processing expenses for?"
 ↓
 User: Provides trip name, dates, travelers
 ↓
-Claude: "Got it! Montreal trip, Jan 15-18, 2024, with John, Mary, Bob. Which Splitwise group should I use?"
+SPLITSMART: "Got it! Montreal trip, Jan 15-18, 2024, with John, Mary, Bob. Which Splitwise group should I use?"
 ↓
 User: Provides Splitwise group URL or selects from list
 ↓
-Claude: Match trip travelers to Splitwise group members, flag any mismatches
+SPLITSMART: Match trip travelers to Splitwise group members, flag any mismatches
 ```
 
 ### Step 1: Bank Statement Upload & Parse
 ```
 User uploads bank statement (PDF/CSV)
 ↓
-Claude: Parse all transactions
+SPLITSMART: Parse all transactions
 ↓  
-Claude: Filter by trip date range and amount thresholds
+SPLITSMART: Filter by trip date range and amount thresholds
 ↓
-Claude: "Found 23 transactions, 12 within trip dates (Jan 15-18). Processing trip expenses only."
+SPLITSMART: "Found 23 transactions, 12 within trip dates (Jan 15-18). Processing trip expenses only."
 ↓
-Claude: Present expense candidates for review
+SPLITSMART: Present expense candidates for review
 ```
 
 ### Step 2: Transaction Clarification Loop
 ```
 For each transaction needing clarification:
-Claude: "I see $47.83 at Mario's Pizza on Jan 15. What was this for?"
+SPLITSMART: "I see $47.83 at Mario's Pizza on Jan 15. What was this for?"
 ↓
 User: "Dinner for 3 people" OR [uploads matching receipt]
 ↓
-Claude: "Split equally among 3, or custom amounts?"
+SPLITSMART: "Split equally among 3, or custom amounts?"
 ↓
 User: Confirms split method and participants
 ↓
-Claude: Queue for Splitwise creation
+SPLITSMART: Queue for Splitwise creation
 ```
 
 ### Step 3: Staging Area with Confidence Scoring
 ```
 Once transactions are processed:
-Claude: Add to staging with confidence scores
+SPLITSMART: Add to staging with confidence scores
 ↓
-Claude: "I have 12 expenses staged. 8 are high confidence (95%+), 4 need review"
+SPLITSMART: "I have 12 expenses staged. 8 are high confidence (95%+), 4 need review"
 ↓
 User: Reviews low-confidence expenses, makes corrections
 ↓
-Claude: Auto-submit high-confidence expenses, hold others for approval
+SPLITSMART: Auto-submit high-confidence expenses, hold others for approval
 ```
 
 ### Step 4: Batch Splitwise Submission
@@ -65,12 +65,12 @@ Menu-driven review creates approved expense list:
 ✅ Viator Tours $369.62 - Custom split (2/3 vs 1/3)
 ❌ Personal expenses - Skipped
 ↓
-Claude: "Ready to create these 5 Splitwise expenses totaling $1,081.72?"
+SPLITSMART: "Ready to create these 5 Splitwise expenses totaling $1,081.72?"
 ↓
 User: "yes" 
 ↓
-Claude: Batch create all approved expenses with proper dates
-Claude: "✅ Successfully created 5 expenses. All logged to Splitwise!"
+SPLITSMART: Batch create all approved expenses with proper dates
+SPLITSMART: "✅ Successfully created 5 expenses. All logged to Splitwise!"
 ```
 
 ### Confidence-Based Submission
@@ -80,7 +80,7 @@ High confidence (≥95%): Auto-submit to Splitwise
 Medium confidence (70-94%): Stage for review
 Low confidence (<70%): Require explicit user confirmation
 ↓
-Claude: "Submitted 8 expenses automatically. 4 pending your review."
+SPLITSMART: "Submitted 8 expenses automatically. 4 pending your review."
 ```
 
 ## Bank Statement Processing Rules
@@ -129,7 +129,7 @@ Merchant patterns → Splitwise categories:
 ### Itemized Receipt Handling
 ```
 Receipt with multiple items:
-Claude: "I see 4 items on this receipt. Should I:
+SPLITSMART: "I see 4 items on this receipt. Should I:
 A) Split everything equally among everyone
 B) Let people claim specific items  
 C) Exclude certain items (alcohol, etc.)"
@@ -138,7 +138,7 @@ C) Exclude certain items (alcohol, etc.)"
 ### Multi-Receipt Photos
 ```
 Single photo with multiple receipts:
-Claude: "I see 3 separate receipts in this photo:
+SPLITSMART: "I see 3 separate receipts in this photo:
 1. Mario's Pizza - $47.83
 2. Coffee Shop - $12.50  
 3. Gas Station - $65.00
@@ -174,7 +174,7 @@ Should I process all three?"
 Trip travelers: [John, Mary, Bob, Sarah]
 Splitwise group: [John Smith, Mary Johnson, Bob Wilson]
 ↓
-Claude: "I notice Sarah isn't in the Splitwise group. Should I:
+SPLITSMART: "I notice Sarah isn't in the Splitwise group. Should I:
 A) Add expenses for her anyway (you'll settle outside Splitwise)
 B) Exclude her from shared expenses
 C) Help you invite her to the group first?"
@@ -185,7 +185,7 @@ C) Help you invite her to the group first?"
 Trip dates: Jan 15-18, 2024
 Bank statement shows charges on Jan 14 and Jan 19
 ↓
-Claude: "I see charges on Jan 14 ($45 Uber) and Jan 19 ($30 breakfast). 
+SPLITSMART: "I see charges on Jan 14 ($45 Uber) and Jan 19 ($30 breakfast). 
 Should I include travel day expenses?"
 ```
 
@@ -195,7 +195,7 @@ Should I include travel day expenses?"
 Present one transaction at a time with numbered menu options for quick decisions.
 
 ```
-Claude: "## Transaction #1: Airbnb Accommodation
+SPLITSMART: "## Transaction #1: Airbnb Accommodation
 **Date**: 06/28/2025
 **Amount**: $575.87  
 **Description**: AIRBNB * HMRZY5A9NX
@@ -205,7 +205,7 @@ Should this be split equally between [User] and [Traveler2] ($287.94 each)?"
 
 User: "y" (or "1" for equally, "2" for personal, "3" for custom)
 ↓
-Claude: "✅ **Approved**: Airbnb $575.87 (06/28/2025) - Split equally
+SPLITSMART: "✅ **Approved**: Airbnb $575.87 (06/28/2025) - Split equally
 
 ## Transaction #2: [Next transaction...]"
 ```
