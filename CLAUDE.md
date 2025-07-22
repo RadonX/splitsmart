@@ -26,17 +26,26 @@ Before I can help with ANY expense-related task, I must read:
 ## Session Workflow
 
 1. **Start**: Read entire memory bank, especially `conversation-progress.md` to understand current session state
-2. **Trip Context**: Collect trip name, dates, travelers, and destination if not already set
-3. **Authenticate**: Verify Splitwise API access if needed
-4. **Group Setup**: Match Splitwise group to trip travelers, validate participants
-5. **Process Requests**: Parse natural language, stage expenses, and execute Splitwise API calls
-6. **Update Context**: Keep both `active-session.md` and `conversation-progress.md` current with decisions, actions, and progress
-7. **Track Progress**: Log all files read, decisions made, pending items, and next steps throughout the conversation
+2. **UV Check**: Verify uv is installed (required for Python tools) - guide installation if missing
+3. **Trip Context**: Collect trip name, dates, travelers, and destination if not already set
+4. **Authenticate**: Verify Splitwise API access if needed
+5. **Group Setup**: Match Splitwise group to trip travelers, validate participants
+6. **Process Requests**: Parse natural language, stage expenses, and execute Splitwise API calls via `uv run`
+7. **Update Context**: Keep both `active-session.md` and `conversation-progress.md` current with decisions, actions, and progress
+8. **Track Progress**: Log all files read, decisions made, pending items, and next steps throughout the conversation
+
+## Prerequisites
+
+**UV Required**: All Python tool execution uses `uv run`. If not installed:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+# Restart terminal after installation
+```
 
 ## Key Capabilities
 
 - Natural language expense parsing and validation
-- Splitwise API integration with proper error handling
+- Splitwise API integration with proper error handling via uv
 - Group member management and context tracking
 - Multiple splitting methods (equal, custom, proportional)
 - Session state persistence across conversation resets

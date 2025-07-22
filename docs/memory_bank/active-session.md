@@ -51,7 +51,14 @@ Format when active:
 
 *To test authentication:*
 ```bash
+# Requires uv installation first
 uv run python tools/splitwise_client.py
+```
+
+*If uv not installed:*
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+# Restart terminal, then test
 ```
 
 ## Document Processing Status

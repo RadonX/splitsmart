@@ -74,14 +74,15 @@ create_custom_split_expense(
 
 1. **Parse natural language** using conversation-parser.md patterns
 2. **Extract parameters**: amount, description, payer, participants, split method
-3. **Call Python function** via Bash tool:
+3. **Call Python function** via Bash tool (uv required):
    ```bash
-   python3 -c "
+   uv run python -c "
    from tools.splitwise_client import create_equal_split_expense
    result = create_equal_split_expense('Dinner', 60.0, 12345, [12345, 67890])
    print(result)
    "
    ```
+   *If uv not installed, guide user to install: `curl -LsSf https://astral.sh/uv/install.sh | sh`*
 4. **Handle response** and update active-session.md
 5. **Confirm to user** with expense details
 
@@ -138,11 +139,19 @@ For "John paid $50, split between John and Mary where John owes $20, Mary owes $
 
 ## Setup Requirements
 
+### Prerequisites
+1. **Install uv** (required for expense session):
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+   *Restart terminal after installation*
+
+### Splitwise Configuration
 1. Copy `.env.example` to `.env`
 2. Register app at https://secure.splitwise.com/apps
 3. Fill in consumer key/secret in `.env`
-4. Install dependencies: `pip install requests python-dotenv`
-5. Test with: `python3 tools/splitwise_client.py`
+4. Dependencies installed automatically via uv
+5. Test with: `uv run python tools/splitwise_client.py`
 
 ## Real-World API Troubleshooting
 

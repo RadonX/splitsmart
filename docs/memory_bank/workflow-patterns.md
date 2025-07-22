@@ -237,6 +237,29 @@ Claude: "✅ **Approved**: Airbnb $575.87 (06/28/2025) - Split equally
 - "The hotel receipt shows $240 total including tax"
 - "This receipt has drinks that only 2 people had"
 
+## Python Tool Execution
+
+### UV Requirement Check
+```bash
+# Check if uv is installed
+if ! command -v uv >/dev/null 2>&1; then
+    echo "UV is required for expense management. Please install:"
+    echo "curl -LsSf https://astral.sh/uv/install.sh | sh"
+    echo "Then restart your terminal."
+    exit 1
+fi
+```
+
+### Standard Tool Execution Pattern
+```bash
+# All Python tools use uv run
+uv run python -c "
+from tools.splitwise_client import create_equal_split_expense
+result = create_equal_split_expense('Dinner', 60.0, 12345, [12345, 67890])
+print(result)
+"
+```
+
 ## Confidence Scoring System
 
 ### Confidence Factors (0-100%)
