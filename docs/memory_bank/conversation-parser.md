@@ -1,5 +1,24 @@
 # Conversation Parsing Patterns
 
+## Menu-Driven Interaction Mode
+
+### Quick Response Parsing
+**Single character responses for efficiency:**
+- "y", "yes", "1" → Equal split among all active participants
+- "n", "no", "2", "personal" → Skip as personal expense  
+- "3", "custom" → Request custom split amounts
+- "skip", "defer", "later" → Add to pending/review list
+
+### Ratio-Based Custom Splits
+- "2 shares for [user], 1 for [traveler]" → Calculate 2:1 ratio split
+- "[user] gets 2/3, [traveler] gets 1/3" → Direct fraction split
+- "60/40 split" → Percentage-based split
+
+### Batch Decision Confirmation
+- "yes" (after expense summary) → Proceed with all approved expenses
+- "review first" → Show detailed breakdown before creating
+- "skip expense 3" → Remove specific item from batch
+
 ## Natural Language → Splitwise API Mapping
 
 ### Common Expense Phrases

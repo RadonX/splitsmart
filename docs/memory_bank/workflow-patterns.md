@@ -59,6 +59,22 @@ Claude: Auto-submit high-confidence expenses, hold others for approval
 
 ### Step 4: Batch Splitwise Submission
 ```
+Menu-driven review creates approved expense list:
+✅ Airbnb $575.87 - Equal split
+✅ Cafe $12.21 - Equal split  
+✅ Viator Tours $369.62 - Custom split (2/3 vs 1/3)
+❌ Personal expenses - Skipped
+↓
+Claude: "Ready to create these 5 Splitwise expenses totaling $1,081.72?"
+↓
+User: "yes" 
+↓
+Claude: Batch create all approved expenses with proper dates
+Claude: "✅ Successfully created 5 expenses. All logged to Splitwise!"
+```
+
+### Confidence-Based Submission
+```
 When confidence threshold met:
 High confidence (≥95%): Auto-submit to Splitwise
 Medium confidence (70-94%): Stage for review
@@ -175,15 +191,43 @@ Should I include travel day expenses?"
 
 ## User Input Patterns
 
-### Transaction Clarification Questions
+### Menu-Driven Transaction Review
+Present one transaction at a time with numbered menu options for quick decisions.
+
+```
+Claude: "## Transaction #1: Airbnb Accommodation
+**Date**: 06/28/2025
+**Amount**: $575.87  
+**Description**: AIRBNB * HMRZY5A9NX
+**Category**: Accommodation
+
+Should this be split equally between [User] and [Traveler2] ($287.94 each)?"
+
+User: "y" (or "1" for equally, "2" for personal, "3" for custom)
+↓
+Claude: "✅ **Approved**: Airbnb $575.87 (06/28/2025) - Split equally
+
+## Transaction #2: [Next transaction...]"
+```
+
+### Open-Ended Transaction Clarification
 - "What was this $X charge at [Merchant] for?"
 - "Who should be included in splitting this expense?"
 - "Did everyone participate equally, or custom amounts?"
 - "Should this be categorized as [category]?"
 
 ### Expected User Responses
+
+**Menu-Driven Quick Responses**:
+- "y" or "equally" → Split equally among all travelers
+- "2" or "personal" → Skip as personal expense
+- "2 shares for [user], 1 for [traveler]" → Custom ratio split
+- "leave them for now" → Defer for receipt cross-check
+- "cross check with receipt later" → Add to pending list
+
+**Open-Ended Detailed Responses**:
 - "Dinner for 4 people, split equally"
-- "Gas, split between me and John only"
+- "Gas, split between me and John only"  
 - "Hotel, I paid, split among everyone"
 - "Skip this one, it's personal"
 - "That's a refund, ignore it"
