@@ -19,6 +19,13 @@ Set up your trip context through conversation:
 - Splitwise group connection
 - Special splitting rules (dependents, custom ratios)
 
+### 🎛️ Menu-Driven Expense Review
+Streamlined transaction processing with quick decisions:
+- One-by-one expense presentation with clear details
+- Single-character responses ("y", "n", "1", "2") for speed
+- Batch processing after all decisions are made
+- Visual confirmations with checkmarks and summaries
+
 ### 📊 Multi-Source Expense Processing
 - **Bank Statements** - CSV/PDF processing with date filtering
 - **Individual Receipts** - PDF text extraction and itemized splitting
@@ -28,6 +35,7 @@ Set up your trip context through conversation:
 ### 🧠 Persistent Memory Bank
 - **Trip Context** - Maintains session state across conversations
 - **Group Matching** - Maps travelers to Splitwise members
+- **Conversation Progress** - Tracks session progress and decisions made
 - **Expense History** - Tracks created expenses and patterns
 - **API Integration** - Splitwise authentication and error handling
 
@@ -61,7 +69,13 @@ You: [Provide trip details and Splitwise group]
 SplitSmart: [Sets up context, matches travelers to group members]
 
 You: [Upload bank statements/receipts or manual entry]
-SplitSmart: [Processes expenses, creates Splitwise entries with proper dates]
+SplitSmart: [Menu-driven review: "Transaction #1: $575.87 Airbnb - Split equally?"]
+
+You: "y" [Quick single-character responses]
+SplitSmart: [✅ Approved, continues to next transaction]
+
+You: "yes" [After reviewing all transactions]
+SplitSmart: [Batch creates all approved expenses with proper dates]
 ```
 
 ## 🏗️ Architecture
@@ -70,15 +84,17 @@ SplitSmart: [Processes expenses, creates Splitwise entries with proper dates]
 SplitSmart uses a persistent memory architecture to maintain context:
 
 - **`active-session.md`** - Current trip state and preferences
+- **`conversation-progress.md`** - Session progress and decision tracking
 - **`splitwise-api.md`** - API integration patterns and authentication
-- **`conversation-parser.md`** - Natural language processing rules
-- **`workflow-patterns.md`** - Bank-statement-first processing workflows
+- **`conversation-parser.md`** - Natural language and menu-driven parsing rules
+- **`workflow-patterns.md`** - Bank-statement-first and menu-driven processing workflows
 
 ### Workflow Types
-1. **Bank-Statement-First** - Primary workflow for comprehensive expense capture
-2. **Receipt Processing** - Detailed itemized expense handling
-3. **Multi-Receipt Photos** - Batch processing of receipt collections
-4. **Manual Entry** - Conversational expense creation
+1. **Menu-Driven Review** - Streamlined one-by-one expense decisions
+2. **Bank-Statement-First** - Primary workflow for comprehensive expense capture
+3. **Receipt Processing** - Detailed itemized expense handling
+4. **Multi-Receipt Photos** - Batch processing of receipt collections
+5. **Manual Entry** - Conversational expense creation
 
 ## 🔧 Key Capabilities
 
