@@ -1,189 +1,152 @@
-# SplitSmart >à=°
+# SplitSmart ğŸŒ
 
-**Your AI Travel Expense Manager - Just Talk, We'll Handle the Math**
+**AI-Powered Travel Expense Manager - Turn Bank Statements into Splitwise Expenses**
 
-Turn your messy receipts and confusing bank statements into perfectly organized Splitwise expenses. SplitSmart understands natural language and does all the heavy lifting automatically.
+Convert messy bank statements and trip receipts into perfectly organized Splitwise expenses through natural conversation. SplitSmart understands your travel context and handles all the tedious expense splitting automatically.
 
-## <¯ Perfect For
+## ğŸ¯ Perfect For
 
-- **Group Travelers** - Friends planning trips together
-- **Family Vacations** - Parents managing complex family expenses  
-- **Business Trips** - Colleagues sharing work travel costs
+- **Group Travelers** - Friends splitting vacation costs
+- **Family Trips** - Parents managing dependent expenses
+- **Business Travel** - Colleagues sharing work trip costs  
 - **Event Organizers** - Anyone coordinating group expenses
 
-## ( What Makes SplitSmart Special
+## âš¡ Core Features
 
-### =ã Natural Conversation
-```
-You: "I paid $47 for dinner at Mario's, split it between me, John, and Sarah"
-SplitSmart: "Got it! I'll add a $47 dinner expense, split 3 ways ($15.67 each). 
-95% confidence - submitting to Splitwise now!"
-```
+### ğŸ—£ï¸ Natural Conversation Interface
+Set up your trip context through conversation:
+- Trip dates, destination, and travelers
+- Splitwise group connection
+- Special splitting rules (dependents, custom ratios)
 
-### <æ Bank Statement Magic
-Upload your bank statement and watch SplitSmart:
-- Filter transactions to your trip dates automatically
-- Identify expense candidates (restaurants, hotels, gas)
-- Ask smart clarifying questions
-- Match receipts to bank charges
+### ğŸ“Š Multi-Source Expense Processing
+- **Bank Statements** - CSV/PDF processing with date filtering
+- **Individual Receipts** - PDF text extraction and itemized splitting
+- **Receipt Photos** - Multi-receipt identification and processing
+- **Manual Entry** - Natural language expense creation
 
-### <¯ Confidence-Based Processing
-- **95%+ confidence** ’ Auto-submit to Splitwise
-- **70-94% confidence** ’ Stage for your review
-- **<70% confidence** ’ Ask for confirmation
-- Never guess with your money!
+### ğŸ§  Persistent Memory Bank
+- **Trip Context** - Maintains session state across conversations
+- **Group Matching** - Maps travelers to Splitwise members
+- **Expense History** - Tracks created expenses and patterns
+- **API Integration** - Splitwise authentication and error handling
 
-### >à Context-Aware Intelligence
-Tell SplitSmart about your trip once:
-- Trip dates and travelers
-- Splitwise group to use
-- Then everything becomes smarter and more accurate
+### ğŸ¯ Confidence-Based Staging
+- **High Confidence (â‰¥95%)** - Auto-submit to Splitwise
+- **Medium Confidence (70-94%)** - Stage for review
+- **Low Confidence (<70%)** - Request user approval
 
-## =€ Quick Start
+## ğŸš€ Quick Start
 
-### 1. Setup (One Time)
+### 1. Setup
 ```bash
-# Clone and setup
 git clone https://github.com/your-username/splitsmart
 cd splitsmart
-uv init && uv add requests python-dotenv
+uv install
 
-# Get Splitwise API credentials at https://secure.splitwise.com/apps
+# Configure Splitwise API credentials
 cp .env.example .env
-# Fill in your API keys in .env
+# Fill in your API keys from https://secure.splitwise.com/apps
 
 # Test connection
 uv run python tools/splitwise_client.py
 ```
 
-### 2. Start a Session
+### 2. Start with Claude Code
 ```
-You: "Let's process expenses for our Montreal trip"
-SplitSmart: "Great! What were the trip dates and who went?"
-You: "January 15-18, 2024. Me, John, Mary, and Bob."
-SplitSmart: "Perfect! Which Splitwise group should I use?"
-You: "https://secure.splitwise.com/#/groups/83515836"
-SplitSmart: "All set! Ready to process Montreal expenses for 4 travelers."
+You: "guide me"
+SplitSmart: [Reads memory bank, presents trip setup options]
+
+You: [Provide trip details and Splitwise group]
+SplitSmart: [Sets up context, matches travelers to group members]
+
+You: [Upload bank statements/receipts or manual entry]
+SplitSmart: [Processes expenses, creates Splitwise entries with proper dates]
 ```
 
-### 3. Process Expenses
+## ğŸ—ï¸ Architecture
 
-**Upload Bank Statement:**
-```
-You: [Upload bank statement PDF]
-SplitSmart: "Found 23 transactions, 12 within trip dates. 
-I see $47.83 at Mario's Pizza, $240 at Marriott Hotel, $65 at Shell Gas.
-Should I process all restaurant, hotel, and gas charges?"
-```
+### Memory Bank System
+SplitSmart uses a persistent memory architecture to maintain context:
 
-**Add Individual Expenses:**
-```
-You: "John paid $60 for gas, split between just me and him"
-SplitSmart: "Adding $60 gas expense paid by John, split equally 
-between you and John ($30 each). 98% confidence - submitting!"
-```
+- **`active-session.md`** - Current trip state and preferences
+- **`splitwise-api.md`** - API integration patterns and authentication
+- **`conversation-parser.md`** - Natural language processing rules
+- **`workflow-patterns.md`** - Bank-statement-first processing workflows
 
-**Receipt Processing:**
-```
-You: [Upload receipt photo]
-SplitSmart: "I see this is a $47.83 receipt from Mario's Pizza. 
-Large pizza $18.99, salads $12.00, drinks $8.50, tax $8.34.
-Should everyone split everything equally?"
-```
+### Workflow Types
+1. **Bank-Statement-First** - Primary workflow for comprehensive expense capture
+2. **Receipt Processing** - Detailed itemized expense handling
+3. **Multi-Receipt Photos** - Batch processing of receipt collections
+4. **Manual Entry** - Conversational expense creation
 
-## =' Advanced Features
+## ğŸ”§ Key Capabilities
 
-### Staging Area
-- Review expenses before they hit Splitwise
-- Edit amounts, participants, or descriptions
-- Batch submit when you're confident
-- Commands: `show staged`, `submit ready`, `edit expense`
+### Smart Expense Parsing
+- Date-aware transaction filtering
+- Merchant and category identification
+- Amount validation and split calculation
+- Currency handling and conversion
 
-### Smart Matching
-- Automatically match receipts to bank statement charges
-- Handle multiple receipts in one photo
-- Filter out ATM withdrawals and personal charges
-- Validate expense amounts and participants
+### Flexible Splitting Methods
+- Equal splits with proper rounding
+- Custom ratios and proportional splits
+- Participant selection per expense
+- Dependent expense handling
 
 ### Error Prevention
-- Catch math errors before Splitwise submission
-- Validate group membership
-- Handle currency conversions
-- Prevent duplicate expenses
+- API response validation
+- Amount reconciliation
+- Duplicate expense detection
+- Group membership verification
 
-## <¨ Example Workflows
+## ğŸ”’ Privacy & Security
 
-### Scenario: Weekend Ski Trip
-```
-SplitSmart: "What trip are we processing?"
-You: "Ski weekend in Vermont, Dec 10-12, with Alex, Jamie, and me"
-You: [Upload bank statement]
-SplitSmart: "Found 8 relevant charges: 
-- $320 Airbnb (Dec 10)
-- $95 grocery store (Dec 10) 
-- $180 ski rental (Dec 11)
-- $67 dinner (Dec 11)
-Should I split these equally among all 3 people?"
-You: "Yes, but the ski rental should exclude me - I brought my own"
-SplitSmart: "Got it! Updating ski rental to split between Alex and Jamie only.
-Ready to submit 4 expenses totaling $662. Proceed?"
-```
+- **Local Processing** - All data stays on your machine
+- **Direct API Integration** - Expenses go straight to your Splitwise
+- **No Data Collection** - Zero external tracking or storage
+- **Open Source** - Full code transparency
 
-### Scenario: Business Dinner
-```
-You: "Add expense: I paid $180 for team dinner at The Steakhouse"
-SplitSmart: "Who should split this expense?"
-You: "Me, Sarah from marketing, and the two developers"
-SplitSmart: "I need to match names to your Splitwise group. 
-Is 'Sarah from marketing' Sarah Johnson (user ID 12345)?"
-You: "Yes, and the developers are Mike and Lisa"
-SplitSmart: "Perfect! $180 dinner split 4 ways ($45 each). 
-Creating expense now!"
-```
+## ğŸ“– Memory Bank Commands
 
-## = Privacy & Security
+The memory bank enables SplitSmart to understand context:
 
-- **API keys** stored locally in `.env` (never committed to git)
-- **No data collection** - everything stays on your machine
-- **Splitwise integration** - your expenses go directly to your account
-- **Open source** - inspect the code yourself
+- `"follow your custom instructions"` - Read memory bank and start
+- `"set group [name]"` - Switch Splitwise groups
+- `"show balances"` - Fetch current group balances
+- `"upload receipt"` - Process PDF receipts
+- `"upload bank statement"` - Process statements for multiple expenses
 
-## > Contributing
+## ğŸ› ï¸ Development
 
-SplitSmart is built with Claude Code and welcomes contributions!
+Built for Claude Code interaction with:
+- Persistent session state management
+- Natural language expense parsing
+- Splitwise API integration with proper date handling
+- Confidence-based automation with human oversight
 
-- **Memory Bank Architecture** - AI context persistence system
-- **Confidence Scoring** - Smart automation with human oversight
-- **Natural Language Processing** - Conversation-driven interface
+## ğŸš¨ Troubleshooting
 
-See `docs/memory_bank/README.md` for architecture details.
+**Authentication Issues**
+- Verify Splitwise API credentials in `.env`
+- Test connection: `uv run python tools/splitwise_client.py`
 
-## <˜ Troubleshooting
+**Group/Member Issues**
+- Ensure Splitwise group URL is correct
+- Verify all travelers are group members
+- Check user ID matching in active session
 
-**"Authentication failed"**
-- Check your `.env` file has valid Splitwise API credentials
-- Test with: `uv run python tools/splitwise_client.py`
+**Processing Issues**
+- Review staging area: expenses may need approval
+- Check confidence scores for automated decisions
+- Verify file formats and date ranges
 
-**"Can't find group members"**
-- Verify Splitwise group URL is correct
-- Make sure all travelers are in the Splitwise group
-
-**"Expenses not submitting"**
-- Check `show staged` to see pending expenses
-- Use `submit ready` to submit high-confidence expenses
-- Review low-confidence expenses with `review low confidence`
-
-**"Bank statement not parsing"**
-- Ensure PDF is readable (not image-based)
-- Try uploading CSV export instead
-- Check trip dates match statement date range
-
-## =İ License
+## ğŸ“„ License
 
 MIT License - Use freely for personal and commercial projects!
 
 ---
 
-**Ready to never split expenses manually again?** 
+**Ready to automate your group expense splitting?**
 
-Start with `git clone` and tell SplitSmart about your next trip! <¿÷<Ô
+Start with Claude Code and let SplitSmart handle the math! ğŸ’âœˆï¸
