@@ -48,19 +48,18 @@ Streamlined transaction processing with quick decisions:
 
 ### 1. Setup
 ```bash
-git clone https://github.com/your-username/splitsmart
-cd splitsmart
-uv install
-
 # Configure Splitwise API credentials
 cp .env.example .env
-# Fill in your API keys from https://secure.splitwise.com/apps
-
-# Test connection
-uv run python tools/splitwise_client.py
+# Fill in your API key from https://secure.splitwise.com/apps
 ```
 
 ### 2. Start with Claude Code
+```bash
+# Launch Claude Code CLI (or gemini)
+claude
+```
+
+Then start the conversation:
 ```
 You: "guide me"
 SplitSmart: [Reads memory bank, presents trip setup options]
