@@ -1,24 +1,27 @@
 # Active Session Context
 
 ## Trip Context
-**Trip Name**: None set
-**Destination**: None
-**Start Date**: Not specified
-**End Date**: Not specified
-**Travelers**: None listed
-**Status**: Context not collected
+**Trip Name**: Mexico Trip
+**Destination**: Mexico
+**Start Date**: 2025-06-28
+**End Date**: 2025-07-05
+**Travelers**: User, Yue, Dependent (joins 7/2 - costs covered by User)
+**Status**: Trip context collected, awaiting Splitwise group selection
 
 ## Current Splitwise Group
-**Status**: No active group selected
-**Group ID**: None
-**Group Name**: None
-**Base Currency**: None
+**Status**: Group loaded and ready
+**Group ID**: 84756280
+**Group Name**: CDMX
+**Base Currency**: USD (default)
 
 ## Group Members & Traveler Matching
-**Splitwise Members**: None loaded
-**Trip Travelers**: None specified
-**Matched Participants**: 0/0
-**Unmatched Travelers**: None
+**Splitwise Members**: 
+- Radon (user_id: 4551847) - Current User
+- Amiga (user_id: 46110409)
+
+**Trip Travelers**: User, Amiga, Dependent (joins 7/2 - User covers costs)
+**Matched Participants**: 2/2 (Radon, Amiga)
+**Unmatched Travelers**: Dependent (not in Splitwise - User will cover their costs)
 
 ```
 Format when active:
@@ -44,7 +47,7 @@ Format when active:
 **Date Format**: YYYY-MM-DD
 
 ## Authentication Status
-**Splitwise API**: Not authenticated
+**Splitwise API**: ✅ Authenticated as Radon
 **Credentials Source**: .env file
 **Python Client**: Available at tools/splitwise_client.py
 **Test Status**: Not tested
