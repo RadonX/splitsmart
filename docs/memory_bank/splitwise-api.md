@@ -54,7 +54,8 @@ create_equal_split_expense(
     payer_user_id: int,
     participant_user_ids: List[int],
     currency: str = "USD",
-    group_id: Optional[int] = None
+    group_id: Optional[int] = None,
+    date: Optional[str] = None  # Format: "YYYY-MM-DD" (defaults to today)
 )
 ```
 
@@ -66,7 +67,8 @@ create_custom_split_expense(
     payer_user_id: int,
     user_amounts: Dict[int, float],  # user_id -> amount_owed
     currency: str = "USD",
-    group_id: Optional[int] = None
+    group_id: Optional[int] = None,
+    date: Optional[str] = None  # Format: "YYYY-MM-DD" (defaults to today)
 )
 ```
 
@@ -76,6 +78,17 @@ create_custom_split_expense(
 2. **Extract parameters**: amount, description, payer, participants, split method
 3. **Call Python function** via Bash tool (uv required):
    ```bash
+   # Using transaction date from bank statement
+   uv run python -c "
+   from tools.splitwise_client import create_equal_split_expense
+   result = create_equal_split_expense(
+       'Dinner', 60.0, 12345, [12345, 67890], 
+       date='2025-01-15'  # Use actual transaction date
+   )
+   print(result)
+   "
+   
+   # Using today's date (default behavior)
    uv run python -c "
    from tools.splitwise_client import create_equal_split_expense
    result = create_equal_split_expense('Dinner', 60.0, 12345, [12345, 67890])

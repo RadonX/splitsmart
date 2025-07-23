@@ -42,6 +42,9 @@ Format when active:
 **Default Category**: General (15)
 **Timezone**: User's local timezone
 **Date Format**: YYYY-MM-DD
+**Expense Date Preference**: Not set
+  - Transaction Date: Use actual date from bank statement/receipt
+  - Log Date: Use today's date when creating expense
 
 ## Authentication Status
 **Splitwise API**: Not authenticated

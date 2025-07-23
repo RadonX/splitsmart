@@ -15,6 +15,10 @@ SPLITSMART: "Got it! Montreal trip, Jan 15-18, 2024, with John, Mary, Bob. Which
 ↓
 User: Provides Splitwise group URL or selects from list
 ↓
+SPLITSMART: "For expense dates, should I use the actual transaction dates from your bank statements, or today's date?"
+↓
+User: Chooses "transaction dates" or "today's date"
+↓
 SPLITSMART: Match trip travelers to Splitwise group members, flag any mismatches
 ```
 
