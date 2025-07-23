@@ -133,6 +133,18 @@ The memory bank enables SplitSmart to understand context:
 - `"upload receipt"` - Process PDF receipts
 - `"upload bank statement"` - Process statements for multiple expenses
 
+## 📋 Real Example
+
+Check out the `mexico_trip` branch for a complete working example:
+- Processing $1,050+ in Mexico trip expenses from bank statements
+- Both equal splits and custom 2:1 ratios demonstrated  
+- Full conversation transcript in `docs/conversation.txt`
+- Updated memory bank showing all 7 created expenses
+
+```bash
+git checkout mexico_trip
+```
+
 ## 🛠️ Development
 
 Built for Claude Code interaction with:
