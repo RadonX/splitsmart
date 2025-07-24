@@ -19,12 +19,13 @@ Set up your trip context through conversation:
 - Splitwise group connection
 - Special splitting rules (dependents, custom ratios)
 
-### 🎛️ Menu-Driven Expense Review
-Streamlined transaction processing with quick decisions:
-- One-by-one expense presentation with clear details
-- Single-character responses ("y", "n", "1", "2") for speed
+### 🎛️ Smart Expense Review
+Streamlined transaction processing with intelligent workflows:
+- **Bulk preview table** grouped by expense type before individual review
+- **Smart refund detection** across different bank formats
+- Single-character responses ("s", "r", "p") for speed: share/ratio/personal
+- **Pattern learning** - remembers your preferences for similar expenses
 - Batch processing after all decisions are made
-- Visual confirmations with checkmarks and summaries
 
 ### 📊 Multi-Source Expense Processing
 - **Bank Statements** - CSV/PDF processing with date filtering
@@ -34,7 +35,8 @@ Streamlined transaction processing with quick decisions:
 
 ### 🧠 Persistent Memory Bank
 - **Trip Context** - Maintains session state across conversations
-- **Group Matching** - Maps travelers to Splitwise members
+- **Group Matching** - Maps travelers to Splitwise members  
+- **Decision Patterns** - Learns and applies your expense preferences
 - **Conversation Progress** - Tracks session progress and decisions made
 - **Expense History** - Tracks created expenses and patterns
 - **API Integration** - Splitwise authentication and error handling
@@ -68,10 +70,10 @@ You: [Provide trip details and Splitwise group]
 SplitSmart: [Sets up context, matches travelers to group members]
 
 You: [Upload bank statements/receipts or manual entry]
-SplitSmart: [Menu-driven review: "Transaction #1: $575.87 Airbnb - Split equally?"]
+SplitSmart: [Shows bulk preview table, then individual review: "Expense 1/12: $575.87 Airbnb"]
 
-You: "y" [Quick single-character responses]
-SplitSmart: [✅ Approved, continues to next transaction]
+You: "s" [Quick responses: share/ratio/personal]
+SplitSmart: [✅ Approved, continues to next expense]
 
 You: "yes" [After reviewing all transactions]
 SplitSmart: [Batch creates all approved expenses with proper dates]
@@ -105,11 +107,13 @@ SplitSmart uses a persistent memory architecture to maintain context:
 
 ### Flexible Splitting Methods
 - Equal splits with proper rounding
-- Custom ratios and proportional splits
+- **Proportional splits** for different group sizes (e.g., travelers with dependents)
 - Participant selection per expense
-- Dependent expense handling
+- **Smart dependent handling** with custom ratios
+- **Pattern-based automation** for consistent splitting preferences
 
 ### Error Prevention
+- **Smart refund detection** - handles different bank formats automatically
 - API response validation
 - Amount reconciliation
 - Duplicate expense detection
