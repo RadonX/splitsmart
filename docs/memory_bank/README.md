@@ -12,6 +12,9 @@ flowchart TD
     API --> WORKFLOW[workflow-patterns.md]
     PARSER --> WORKFLOW
     WORKFLOW --> SESSION[active-session.md]
+    WORKFLOW --> PROGRESS[expense-progress.md]
+    SESSION --> PROGRESS
+    PROGRESS -.-> |Updates during session| PROGRESS
 ```
 
 ## Core Files
@@ -44,8 +47,11 @@ flowchart TD
     
     ReadyToProcess --> ProcessDocs[Process Bank Statement/Receipts]
     ContinueWork --> ProcessDocs
-    ProcessDocs --> MenuReview[Menu-Driven Review: y/n decisions]
-    MenuReview --> StagingArea[Add to Staging with Confidence Scores]
+    ProcessDocs --> RefundFilter[Smart Refund Detection]
+    RefundFilter --> BulkPreview[Show Bulk Decision Preview Table]
+    BulkPreview --> IndividualReview[Individual Review: s/2/p decisions]
+    IndividualReview --> PatternCheck{Check User Patterns}
+    PatternCheck --> StagingArea[Add to Staging with Confidence Scores]
     StagingArea --> ConfidenceSort{Sort by Confidence}
     
     ConfidenceSort --> HighConf[High ≥95%: Auto-Submit]
@@ -59,7 +65,8 @@ flowchart TD
     UserReview --> BatchSubmit
     UserApproval --> BatchSubmit
     BatchSubmit --> UpdateProgress[Update expense-progress.md]
-    UpdateProgress --> ProcessDocs
+    UpdateProgress --> LearnPatterns[Update User Decision Patterns]
+    LearnPatterns --> ProcessDocs
 ```
 
 ## Usage
@@ -77,8 +84,9 @@ flowchart TD
 
 **During expense entry:**
 1. Parse natural language using conversation-parser.md patterns
-2. Map to Splitwise API calls using splitwise-api.md
-3. Update expense-progress.md with user decisions and created expenses
+2. Handle dependent splits (custom ratios when travelers have different group sizes)
+3. Map to Splitwise API calls using splitwise-api.md
+4. Update expense-progress.md with user decisions and created expenses
 
 **During receipt processing:**
 1. Use Read tool to extract text from uploaded PDF receipts
@@ -87,10 +95,13 @@ flowchart TD
 4. Create expense with detailed breakdown in notes field
 
 **During bank statement processing:**
-1. Extract transaction data from bank statement PDF/image
-2. Filter transactions by trip dates and relevance
-3. Present candidates for splitting, excluding ATM/personal charges
-4. Batch create multiple Splitwise expenses efficiently
+1. Extract transaction data from bank statement PDF/CSV
+2. Smart refund detection (negative amounts, keywords, patterns)
+3. Filter transactions by trip dates and relevance
+4. Show bulk decision preview table grouped by expense type
+5. Individual review with s/2/p decisions (share/2:1 split/personal)
+6. Learn user decision patterns for future efficiency
+7. Batch create multiple Splitwise expenses efficiently
 
 **During multi-receipt photo processing:**
 1. Identify separate receipt regions within single photo
@@ -116,12 +127,17 @@ flowchart TD
 ## Core Capabilities
 
 - Natural language expense parsing
+- **Dependent handling with proportional split ratios**
 - PDF receipt processing and text extraction
+- **Smart refund detection across different bank formats**
 - Bank statement transaction filtering and batch processing
+- **Bulk decision preview with expense grouping**
 - Multi-receipt photo analysis and individual processing
 - Itemized expense splitting with line-item control
+- **User decision pattern learning and auto-application**
 - Splitwise API integration with authentication
 - Multiple splitting methods (equal, custom, proportional)
 - Group member management and context tracking
+- **Confidence-based staging and auto-submission**
 - Error handling and user guidance
 - Simple Python functions for API calls when needed
