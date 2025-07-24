@@ -20,7 +20,10 @@
 - None uploaded yet
 
 ## Splitwise Expenses Created
-**Successfully Submitted**: 0 expenses, $0.00 total
+**Auto-Submitted (High Confidence ≥95%)**: 0 expenses, $0.00 total
+- None yet
+
+**Batch Submitted (After Review)**: 0 expenses, $0.00 total  
 - None yet
 
 **Failed/Retry Needed**: 0 expenses
@@ -36,15 +39,26 @@
 **Skip/Personal Expenses**:
 - None yet
 
+## Staging Area by Confidence Level
+
+**High Confidence (≥95%)** - Ready for auto-submit:
+- None staged
+
+**Medium Confidence (70-94%)** - Staged for review:
+- None staged
+
+**Low Confidence (<70%)** - Requiring user approval:
+- None staged
+
 ## Pending Items Requiring User Input
 
-**High Priority** (session blocked):
+**Clarifications Needed**:
 - None
 
-**Medium Priority** (improve accuracy):
+**Review Staged Items**:
 - None
 
-**Low Priority** (optional):
+**Manual Decisions**:
 - None
 
 ## Processing Statistics

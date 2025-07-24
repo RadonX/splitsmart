@@ -42,10 +42,24 @@ flowchart TD
     CheckProgress -->|No| ReadyToProcess
     CheckProgress -->|Yes| ContinueWork[Continue from where left off]
     
-    ReadyToProcess --> ProcessExpenses[Process Documents/Expenses]
-    ContinueWork --> ProcessExpenses
-    ProcessExpenses --> UpdateProgress[Update expense-progress.md]
-    UpdateProgress --> ProcessExpenses
+    ReadyToProcess --> ProcessDocs[Process Bank Statement/Receipts]
+    ContinueWork --> ProcessDocs
+    ProcessDocs --> MenuReview[Menu-Driven Review: y/n decisions]
+    MenuReview --> StagingArea[Add to Staging with Confidence Scores]
+    StagingArea --> ConfidenceSort{Sort by Confidence}
+    
+    ConfidenceSort --> HighConf[High ≥95%: Auto-Submit]
+    ConfidenceSort --> MedConf[Medium 70-94%: Stage for Review]
+    ConfidenceSort --> LowConf[Low <70%: Request Approval]
+    
+    HighConf --> BatchSubmit[Batch Create Splitwise Expenses]
+    MedConf --> UserReview[User Reviews Staged]
+    LowConf --> UserApproval[User Approves/Rejects]
+    
+    UserReview --> BatchSubmit
+    UserApproval --> BatchSubmit
+    BatchSubmit --> UpdateProgress[Update expense-progress.md]
+    UpdateProgress --> ProcessDocs
 ```
 
 ## Usage
