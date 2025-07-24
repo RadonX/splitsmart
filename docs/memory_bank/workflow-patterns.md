@@ -103,14 +103,28 @@ SPLITSMART: "Submitted 8 expenses automatically. 4 pending your review."
 - Bank fees/interest
 - Transfers between accounts
 - Personal charges outside trip dates
-- Duplicate/refund transactions
+- Duplicate transactions
 - Charges below $5 threshold
+
+**Handle Separately - Smart Refund Detection:**
+- **Amount-based**: Negative amounts (most banks show refunds as negative)
+- **Description-based**: Positive amounts with refund keywords: "REFUND", "RETURN", "CREDIT", "REVERSAL", "CHARGEBACK"
+- **Pattern-based**: Duplicate merchant + similar amount within 7 days (likely refund/correction)
+- **Transaction type**: Some banks have explicit "Credit", "Return", "Refund" transaction types
+- Process all detected refunds in separate "Refunds/Credits" section
 
 **Ask User to Confirm:**
 - Large charges (>$500)
 - Unclear merchant names
 - Charges on trip boundary dates
 - Multiple charges at same merchant
+
+### Smart Refund Detection
+**SPLITSMART can intelligently identify refunds by recognizing:**
+- Negative amounts (most banks) 
+- Refund keywords in descriptions (REFUND, RETURN, CREDIT, etc.)
+- Transaction types (Credit, Return, Adjustment)
+- Duplicate merchant patterns (same place, similar amount, recent timing)
 
 ### Transaction Categorization
 ```
@@ -172,6 +186,21 @@ Should I process all three?"
 - "Do all travelers have Splitwise accounts?"
 - "Should I create expenses for everyone or just group members?"
 
+### Dependent Handling Framework
+**When user mentions dependents:**
+```
+User: "Trip with me, [Traveler2], and my dependent. I'll cover my dependent's expenses."
+↓
+SPLITSMART: Capture in active-session.md: "User covers [dependent name]'s expenses"
+↓
+For each expense, ask: "Did this include [dependent]?" (y/n)
+↓
+Apply ratios:
+- No (n): Equal split between travelers
+- Yes (y): 2:1 split (covering traveler pays 2/3, other pays 1/3)  
+- Personal: Skip entirely
+```
+
 ### Trip Context Validation
 **Traveler Matching:**
 ```
@@ -194,6 +223,25 @@ Should I include travel day expenses?"
 ```
 
 ## User Input Patterns
+
+### Bulk Decision Preview
+**Before individual review, show expenses in table format:**
+```
+SPLITSMART: "Found 12 expenses. Here's the preview grouped by type:
+
+TRANSPORTATION (6 expenses):
+#  | Date  | Amount | Description      | Suggested Split
+1  | 06/29 | $1.79  | UBER* TRIP      | Equal (1:1)
+2  | 06/30 | $5.85  | UBER* TRIP      | Equal (1:1)
+[...]
+
+DINING (3 expenses):
+#  | Date  | Amount | Description      | Suggested Split
+8  | 07/02 | $17.10 | MAIZAJO RESTO   | Equal (1:1)
+[...]
+
+Ready to review each one? (Patterns: Similar expenses often have same split preference)"
+```
 
 ### Menu-Driven Transaction Review
 Present one transaction at a time with numbered menu options for quick decisions.

@@ -61,6 +61,13 @@
 **Manual Decisions**:
 - None
 
+## User Decision Patterns
+**Merchant Preferences** (learned after 2+ consistent decisions):
+- None learned yet
+
+**Category Patterns** (observed user preferences):
+- None established yet
+
 ## Processing Statistics
 - **Bank transactions reviewed**: 0
 - **Receipts processed**: 0  
